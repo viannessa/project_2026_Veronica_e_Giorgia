@@ -9,4 +9,4 @@ class Event(SQLModel, table = True):
     title: str
     description: str
     date: datetime
-    location: str
+    location:
