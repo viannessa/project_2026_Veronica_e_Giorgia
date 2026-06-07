@@ -20,9 +20,47 @@ def init_database() -> None:
     SQLModel.metadata.create_all(engine)
     if not ds_exists:
         f = Faker("it_IT")
-        with Session(engine) as session:
+        with (Session(engine) as session):
             # TODO: (optional) initialize the database with fake data
-            ...
+            # creazione dati utenti
+                    users = []
+                    for o in range(5):
+                        user = User(
+                            username=f.user_name(),
+                            name=f.name(),
+                            email=f.email()
+                        )
+                        session.add(user)
+                        users.append(user)
+
+                    # creazione dati eventi
+                    events = []
+                    for o in range(5):
+                        event = Event(
+                            title=f.catch_phrase(),
+                            description=f.sentence(),
+                            date=f.date_this_year(),
+                            location = f.city()
+
+                        )
+                        session.add(event)
+                        events.append(event)
+
+                    # Commit necessario per assegnare gli ID dal DB agli oggetti in memoria
+                    session.commit()
+
+                    # creazione dati registrazioni
+
+                    for user in users:
+                        # Ogni utente si registra a un numero casuale di eventi (1 o 2)
+                        for event in f.random_elements(elements=events, length=f.random_int(1, 2), unique=True):
+                            registration = Registration(
+                                username=user.username,
+                                event_id=event.id
+                            )
+                            session.add(registration)
+
+                    session.commit()
 
 
 def get_session():
