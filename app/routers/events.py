@@ -7,10 +7,10 @@ from typing import Annotated
 from app.data.db import SessionDep
 from sqlmodel import select, delete
 
-events_router = APIRouter(prefix = "/events", tags = ["Events"])
+router = APIRouter(prefix = "/events", tags = ["Events"])
 
 #1. API 1: Restituisce la lista di tutti gli eventi esistenti
-@events_router.get("/")
+@router.get("/")
 def get_all_events(
         session:SessionDep
 ) -> list[EventPublic]:
@@ -19,7 +19,7 @@ def get_all_events(
     return list(events)
 
 #2. API 2: Crea un nuovo evento
-@events_router.post("/")
+@router.post("/")
 def create_event(
         session: SessionDep,
         event: EventCreate):
@@ -30,7 +30,7 @@ def create_event(
 
 
 #3. API 3: Restituisce l'evento con l'id indicato
-@events_router.get("/{id}")
+@router.get("/{id}")
 def get_event(
         session: SessionDep,
         id: Annotated[int, Path (description= "The ID of the event")]
@@ -42,7 +42,7 @@ def get_event(
         raise HTTPException(status_code = 404, detail = "Event not found")
 
 #4. API 4: Aggiorna un evento esistente
-@events_router.put("/{id}")
+@router.put("/{id}")
 def update_event(
         session: SessionDep,
         id: Annotated[int, Path (description= "The ID of the event to update")],
@@ -63,7 +63,7 @@ def update_event(
 
 #5. API 5: Registra un utente all'evento con l'id indicato.
 # Se l'utente non esiste ancora nella tabella user, viene creato automaticamente.
-@events_router.post("/{id}/register")
+@router.post("/{id}/register")
 def register_user_to_event(
         session: SessionDep,
         id: Annotated[int, Path (description="The ID of the event to register to")],
@@ -95,7 +95,7 @@ def register_user_to_event(
         return {"message": "Registrazione completata con successo"}
 
 #6. API 6: Elimina tutti gli eventi
-@events_router.delete("/")
+@router.delete("/")
 def delete_events(
         session: SessionDep
 ):
@@ -104,7 +104,7 @@ def delete_events(
     return "All books are deleted successfully"
 
 #7. API 7: Eliminare l'evento con l'id indicato
-@events_router.delete("/{id}")
+@router.delete("/{id}")
 def delete_event(
         session: SessionDep,
         id: Annotated[int, Path (description="The ID of the event to delete")]

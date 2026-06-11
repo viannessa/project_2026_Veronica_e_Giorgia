@@ -1,5 +1,6 @@
 from sqlmodel import SQLModel, Field
 from datetime import datetime
+from typing import Optional
 
 #1. MODELLO BASE: USATO PER DEFINIRE I CAMPI COMUNI
 class EventBase(SQLModel):
@@ -18,4 +19,4 @@ class EventPublic(EventBase):
 #4. MODELLO RELAZIONALE (DATABASE): crea la tabella ed è l'ORM vero e proprio
 #è richiesto esplicitamente dall specifiche che si chiami "Event"
 class Event (EventBase, table = True):
-    id: int = Field(default=None, primary_key=True)
+    id: Optional[int] = Field(default=None, primary_key=True)
