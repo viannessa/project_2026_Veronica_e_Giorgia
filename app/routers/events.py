@@ -14,7 +14,7 @@ router = APIRouter(prefix = "/events", tags = ["Events"])
 def get_all_events(
         session:SessionDep
 ) -> list[EventPublic]:
-    """Return all events"""
+    """RICHIEDI LA LISTA DI TUTTI GLI EVENTI."""
     events = session.exec(select(Event)).all()
     return list(events)
 
@@ -23,6 +23,7 @@ def get_all_events(
 def create_event(
         session: SessionDep,
         event: EventCreate):
+    """CREA UN NUOVO EVENTO."""
     new_event = Event.model_validate(event)
     session.add(new_event)
     session.commit()
@@ -35,6 +36,7 @@ def get_event(
         session: SessionDep,
         id: Annotated[int, Path (description= "The ID of the event")]
 ) -> EventPublic:
+    """FORNISCE I DETTAGLI DI UN SINGOLO EVENTO CERCATO TRAMITE ID."""
     event = session.get(Event, id)
     if event:
         return event
@@ -48,6 +50,7 @@ def update_event(
         id: Annotated[int, Path (description= "The ID of the event to update")],
         new_event: EventCreate
 ):
+    """AGGIORNA UN EVENTO ESISTENTE."""
     event = session.get(Event, id)
     if event:
         event.title = new_event.title
@@ -69,6 +72,7 @@ def register_user_to_event(
         id: Annotated[int, Path (description="The ID of the event to register to")],
         user: User, #riceve i dati dall'utente dal corpo della richiesta (JSON)
 ):
+    """REGISTRA UN UTENTE A UN EVENTO SPECIFICO"""
     #1. CONTROLLO SE L'EVENTO ESISTE
     event = session.get(Event, id)
     if not event:
@@ -86,19 +90,20 @@ def register_user_to_event(
     #controllo se la registrazione esiste già
     registration = session.get(Registration, (user.username,id))
     if registration:
-        return {"message": "Utente già registrato a questo evento", "username": user.username, "event_id": id}
+        return "Utente già registrato a questo evento"
     else:
         new_registration = Registration(username = user.username, event_id= id)
         session.add(new_registration)
         session.commit()
 
-        return {"message": "Registrazione completata con successo"}
+        return "Registrazione completata con successo"
 
 #6. API 6: Elimina tutti gli eventi
 @router.delete("/")
 def delete_events(
         session: SessionDep
 ):
+    """ELIMINA TUTTI GLI EVENTI DEL DATABASE."""
     session.exec(delete(Event))
     session.commit()
     return "All books are deleted successfully"
@@ -109,9 +114,15 @@ def delete_event(
         session: SessionDep,
         id: Annotated[int, Path (description="The ID of the event to delete")]
 ):
+    """ELIMINA UN EVENTO SPECIFICO NEL DATABASE."""
     event = session.get(Event, id)
     if not event:
         raise HTTPException(status_code = 404, detail = "Event not found")
+
+    # 1. Rimuovi le registrazioni collegate
+    session.exec(delete(Registration).where(Registration.event_id == id))
+    session.flush()  # Sincronizza subito la cancellazione nel DB
+
     session.delete(event)
     session.commit()
     return "Event deleted successfully"
