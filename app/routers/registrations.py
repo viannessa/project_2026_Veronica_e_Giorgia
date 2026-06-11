@@ -16,9 +16,12 @@ def get_all_registrations(session: SessionDep ) -> list[RegistrationPublic]:
     return registration
 
 @router.delete("/")
-def delete_registrtion(username: str, event_id: int, session: SessionDep):
+def delete_registration(username: str, event_id: int, session: SessionDep):
 
-    """Si verifica come prima cosa che l'utente e l'evento esistano, se esistono
+    """
+    Elimina una singola registrazione identificata tramite query parameter.
+
+    Si verifica come prima cosa che l'utente e l'evento esistano, se esistono
     si procede a cercare la registrazione in questione e se anche quest'ultima
     esiste, si procede a eliminarla"""
 
