@@ -12,6 +12,7 @@ class EventBase(SQLModel):
 #2. MODELLO INPUT: USATO PER POST E PUT (no ID)
 class EventCreate (EventBase):
     pass
+
 #3. MODELLO OUTPUT: USATO PER GET (con ID)
 class EventPublic(EventBase):
     id: int
