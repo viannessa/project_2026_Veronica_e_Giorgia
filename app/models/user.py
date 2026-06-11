@@ -18,3 +18,6 @@ class User(UserBase, table = True):
 class UserPublic(UserBase):
     """Modello di dati per le API, permette di restituire le info di un utente"""
     pass
+
+class Usercreate(UserBase):
+    pass
