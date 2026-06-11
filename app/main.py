@@ -13,7 +13,7 @@ if Path(__file__).parent == Path(os.getcwd()):
 # You can add imports from here...
 
 from fastapi import FastAPI
-from app.routers import frontend, users, registrations
+from app.routers import frontend, users, registrations, events
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 from app.data.db import init_database
@@ -36,6 +36,7 @@ app.mount(
 app.include_router(frontend.router)
 app.include_router(users.router)
 app.include_router(registrations.router)
+app.include_router(events.router)
 
 
 if __name__ == "__main__":
