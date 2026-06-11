@@ -104,7 +104,7 @@ def delete_events(
     return "All books are deleted successfully"
 
 #7. API 7: Eliminare l'evento con l'id indicato
-@router.delete("/{id}")
+@router.delete("/{id}") g
 def delete_event(
         session: SessionDep,
         id: Annotated[int, Path (description="The ID of the event to delete")]
