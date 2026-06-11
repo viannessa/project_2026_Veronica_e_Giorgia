@@ -101,7 +101,7 @@ def delete_events(
 ):
     session.exec(delete(Event))
     session.commit()
-    return "All books are deleted successfully"
+    return "All events are deleted successfully"
 
 #7. API 7: Eliminare l'evento con l'id indicato
 @router.delete("/{id}")
