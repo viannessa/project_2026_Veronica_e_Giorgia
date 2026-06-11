@@ -15,7 +15,7 @@ class EventCreate (EventBase):
 class EventPublic(EventBase):
     id: int
 
-#3. MODELLO RELAZIONALE (DATABASE): crea la tabella ed è l'ORM vero e proprio
+#4. MODELLO RELAZIONALE (DATABASE): crea la tabella ed è l'ORM vero e proprio
 #è richiesto esplicitamente dall specifiche che si chiami "Event"
 class Event (EventBase, table = True):
     id: int = Field(default=None, primary_key=True)
