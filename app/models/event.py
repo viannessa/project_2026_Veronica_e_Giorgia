@@ -4,7 +4,6 @@ from typing import Optional
 
 #1. MODELLO BASE: USATO PER DEFINIRE I CAMPI COMUNI
 class EventBase(SQLModel):
-    '''E' il modello di dati per le api con gli attributi comuni'''
     title: str
     description: str
     date: datetime
