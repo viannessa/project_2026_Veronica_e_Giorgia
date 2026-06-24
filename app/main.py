@@ -42,3 +42,5 @@ app.include_router(events.router)
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", reload=True)
+
+'''FINE MAIN'''
