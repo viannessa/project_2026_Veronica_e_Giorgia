@@ -22,4 +22,4 @@ class UserPublic(UserBase):
 class UserCreate(UserBase):
     pass
 
-'''FINE A'''
+'''FINE '''

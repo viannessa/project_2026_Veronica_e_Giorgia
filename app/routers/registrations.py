@@ -49,4 +49,4 @@ def delete_registration(username: str, event_id: int, session: SessionDep):
 
     return {"message": "Registration deleted successfully"}
 
-'''FINE A'''
+'''FINE '''
