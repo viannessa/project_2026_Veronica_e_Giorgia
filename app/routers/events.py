@@ -2,7 +2,7 @@
 from fastapi import APIRouter, Path, HTTPException, Query
 from app.models.event import EventCreate, EventPublic, Event
 from app.models.registration import Registration
-from app.models.user import User, Usercreate
+from app.models.user import User, UserCreate
 from typing import Annotated
 from app.data.db import SessionDep
 from sqlmodel import select, delete
@@ -70,7 +70,7 @@ def update_event(
 def register_user_to_event(
         session: SessionDep,
         id: Annotated[int, Path (description="The ID of the event to register to")],
-        user: Usercreate, #riceve i dati dall'utente dal corpo della richiesta (JSON)
+        user: UserCreate, #riceve i dati dall'utente dal corpo della richiesta (JSON)
 ):
     """REGISTRA UN UTENTE A UN EVENTO SPECIFICO"""
     #1. CONTROLLO SE L'EVENTO ESISTE
@@ -108,7 +108,7 @@ def delete_events(
     session.flush()
     session.exec(delete(Event))
     session.commit()
-    return "All books are deleted successfully"
+    return "All events are deleted successfully"
 
 #7. API 7: Eliminare l'evento con l'id indicato
 @router.delete("/{id}")
