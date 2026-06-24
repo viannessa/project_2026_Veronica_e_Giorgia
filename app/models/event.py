@@ -15,6 +15,7 @@ class EventCreate (EventBase):
 
 #3. MODELLO OUTPUT: USATO PER GET (con ID)
 class EventPublic(EventBase):
+    '''Rappresenta la struttura dei dati che verrano restituiti dalle API'''
     id: int
 
 #4. MODELLO RELAZIONALE (DATABASE): crea la tabella ed è l'ORM vero e proprio
