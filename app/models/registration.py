@@ -10,4 +10,4 @@ class RegistrationPublic(Registration):
     """Modello di dati per le API, permette di restituire le info di una registrazione"""
     pass
 
-'''FINE'''
+'''FINE A'''

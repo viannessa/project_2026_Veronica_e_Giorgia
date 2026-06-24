@@ -83,4 +83,4 @@ def delete_user(username: str, session: SessionDep):
 
     return {"message": f"User {username} deleted successfully"}
 
-'''FINE'''
+'''FINE A'''

@@ -23,4 +23,4 @@ class Event (EventBase, table = True):
     """Rappresenta la tabella 'event' all'interno del database relazionale"""
     id: Optional[int] = Field(default=None, primary_key=True)
 
-'''FINE'''
+'''FINE A'''
