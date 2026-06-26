@@ -26,7 +26,7 @@ def create_event(
     new_event = Event.model_validate(event)
     session.add(new_event)
     session.commit()
-    return ("Event created successfully")
+    return "Event created successfully"
 
 
 @router.get("/{id}")
@@ -78,7 +78,7 @@ def register_user_to_event(
     event = session.get(Event, id)
     if not event:
         raise HTTPException(status_code = 404,
-                            detail = "Event not found")
+                            detail = "Evento non trovato")
 
     #CONTROLLO SE L'UTENTE ESISTE GIA' (la chiave primaria è username)
     db_user = session.get(User, user.username)
@@ -109,7 +109,7 @@ def delete_events(
     session.flush()
     session.exec(delete(Event))
     session.commit()
-    return "All events are deleted successfully"
+    return "Tutti gli eventi sono stati eliminati correttamente"
 
 
 @router.delete("/{id}")
@@ -121,7 +121,7 @@ def delete_event(
     se l'evento non esiste restituisce un 404"""
     event = session.get(Event, id)
     if not event:
-        raise HTTPException(status_code = 404, detail = "Event not found")
+        raise HTTPException(status_code = 404, detail = "Evento non trovato")
 
     #Rimuovi le registrazioni collegate
     session.exec(delete(Registration).where(Registration.event_id == id))
@@ -129,5 +129,5 @@ def delete_event(
 
     session.delete(event)
     session.commit()
-    return "Event deleted successfully"
+    return "Evento eliminato correttamente"
 
