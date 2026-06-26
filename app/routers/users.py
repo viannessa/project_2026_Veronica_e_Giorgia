@@ -81,3 +81,6 @@ def delete_user(username: str, session: SessionDep):
     session.commit()
 
     return f"Utente {username} eliminato correttamente"
+
+
+'''fine'''
