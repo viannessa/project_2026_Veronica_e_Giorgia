@@ -24,7 +24,7 @@ def add_user (session: SessionDep, user : UserCreate):
     user_in = session.get(User, user.username)
 
     if user_in:
-        raise HTTPException(status_code=400, detail= "L'utente già esistente")
+        raise HTTPException(status_code=400, detail= "Utente già esistente")
 
     db_user = User.model_validate(user)
     session.add(db_user)
