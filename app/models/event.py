@@ -17,7 +17,7 @@ class Event (EventBase, table = True):
 
 
 class EventCreate (EventBase):
-    '''Modello di dati per le API, permette di creare un evento'''
+    """Modello di dati per le API, permette di creare un evento"""
     pass
 
 

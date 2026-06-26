@@ -9,29 +9,21 @@ from sqlmodel import select
 router = APIRouter(prefix="/registrations")
 @router.get("/")
 def get_all_registrations(session: SessionDep ) -> list[RegistrationPublic]:
-
     """ Restituisce la lista di tutte le registrazioni esistenti """
-
     registration = session.exec(select(Registration)).all()
     return registration
 
 @router.delete("/")
 def delete_registration(username: str, event_id: int, session: SessionDep):
-
-    """
-    Elimina una singola registrazione identificata tramite query parameter.
-
+    """Elimina una singola registrazione identificata tramite query parameter.
     Si verifica come prima cosa che l'utente e l'evento esistano, se esistono
     si procede a cercare la registrazione in questione e se anche quest'ultima
     esiste, si procede a eliminarla"""
-
     if not session.get(User, username):
         raise HTTPException(status_code=404, detail="User not found")
 
-
     if not session.get(Event, event_id):
         raise HTTPException(status_code=404, detail="Event not found")
-
 
     statement = select(Registration).where(
         Registration.username == username,
@@ -39,10 +31,8 @@ def delete_registration(username: str, event_id: int, session: SessionDep):
     )
     registration = session.exec(statement).first()
 
-
     if not registration:
         raise HTTPException(status_code=404, detail="Registration not found")
-
 
     session.delete(registration)
     session.commit()

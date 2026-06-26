@@ -18,6 +18,6 @@ class UserPublic(UserBase):
     pass
 
 class UserCreate(UserBase):
-    '''Modello di dati per le API, permette di creare un utente'''
+    """Modello di dati per le API, permette di creare un utente"""
     pass
 
