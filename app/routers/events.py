@@ -27,7 +27,7 @@ def create_event(
     new_event = Event.model_validate(event)
     session.add(new_event)
     session.commit()
-    return "Evento creato correttamente"
+    return ("Event created successfully")
 
 
 #3. API 3: Restituisce l'evento con l'id indicato
@@ -41,7 +41,7 @@ def get_event(
     if event:
         return event
     else:
-        raise HTTPException(status_code = 404, detail = "Evento non trovato")
+        raise HTTPException(status_code = 404, detail = "Event not found")
 
 #4. API 4: Aggiorna un evento esistente
 @router.put("/{id}")
@@ -60,9 +60,9 @@ def update_event(
         session.add(event)
         session.commit()
     else:
-        raise HTTPException(status_code = 404, detail = "Evento non trovato")
+        raise HTTPException(status_code = 404, detail = "Event not found")
 
-    return "Evento aggiornato correttamente"
+    return "Event update successfully"
 
 #5. API 5: Registra un utente all'evento con l'id indicato.
 # Se l'utente non esiste ancora nella tabella user, viene creato automaticamente.
@@ -77,7 +77,7 @@ def register_user_to_event(
     event = session.get(Event, id)
     if not event:
         raise HTTPException(status_code = 404,
-                            detail = "Evento non trovato")
+                            detail = "Event not found")
     #2. CONTROLLO SE L'UTENTE ESISTE GIA' (la chiave primaria è username)
     db_user = session.get(User, user.username)
     if not db_user:
@@ -108,7 +108,7 @@ def delete_events(
     session.flush()
     session.exec(delete(Event))
     session.commit()
-    return "Tutti gli eventi sono stati eliminati correttamente"
+    return "All events are deleted successfully"
 
 #7. API 7: Eliminare l'evento con l'id indicato
 @router.delete("/{id}")
@@ -119,7 +119,7 @@ def delete_event(
     """ELIMINA UN EVENTO SPECIFICO NEL DATABASE."""
     event = session.get(Event, id)
     if not event:
-        raise HTTPException(status_code = 404, detail = "Evento non trovato")
+        raise HTTPException(status_code = 404, detail = "Event not found")
 
     # 1. Rimuovi le registrazioni collegate
     session.exec(delete(Registration).where(Registration.event_id == id))
@@ -127,4 +127,5 @@ def delete_event(
 
     session.delete(event)
     session.commit()
-    return "Evento eliminato correttamente"
+    return "Event deleted successfully"
+
