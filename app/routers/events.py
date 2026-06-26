@@ -26,7 +26,7 @@ def create_event(
     new_event = Event.model_validate(event)
     session.add(new_event)
     session.commit()
-    return "Event created successfully"
+    return "Evento creato con successo"
 
 
 @router.get("/{id}")
@@ -40,7 +40,7 @@ def get_event(
     if event:
         return event
     else:
-        raise HTTPException(status_code = 404, detail = "Event not found")
+        raise HTTPException(status_code = 404, detail = "Evento non trovato")
 
 
 @router.put("/{id}")
@@ -62,7 +62,7 @@ def update_event(
     else:
         raise HTTPException(status_code = 404, detail = "Event not found")
 
-    return "Event update successfully"
+    return "Evento aggiornato con successo"
 
 
 @router.post("/{id}/register")
