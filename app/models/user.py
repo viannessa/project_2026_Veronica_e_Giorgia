@@ -2,10 +2,8 @@ from sqlmodel import Field, SQLModel
 
 
 class UserBase(SQLModel):
-    """
-    Serve a definire tutti i campi comuni che l'utente
-    possiede all'interno del sistema
-    """
+    """Serve a definire tutti i campi comuni che l'utente
+    possiede all'interno del sistema"""
     username: str = Field(primary_key=True, index=True)
     name: str
     email: str
@@ -20,6 +18,6 @@ class UserPublic(UserBase):
     pass
 
 class UserCreate(UserBase):
+    '''Modello di dati per le API, permette di creare un utente'''
     pass
 
-'''FINE '''
