@@ -24,7 +24,7 @@ def add_user (session: SessionDep, user : UserCreate):
     user_in = session.get(User, user.username)
 
     if user_in:
-        raise HTTPException(status_code=400, detail= "User already exists")
+        raise HTTPException(status_code=400, detail= "L'utente già esistente")
 
     db_user = User.model_validate(user)
     session.add(db_user)
@@ -42,7 +42,7 @@ def get_user_by_username(session: SessionDep, username: str)-> UserPublic:
     user = session.get(User, username)
 
     if not user:
-        raise HTTPException(status_code = 404, detail = "User not found")
+        raise HTTPException(status_code = 404, detail = "Utente non trovato")
 
     return user
 
@@ -57,8 +57,7 @@ def delete_all_users(session: SessionDep):
     #si eliminano poi tutti gli utenti
     session.exec(delete(User))
     session.commit()
-    return {"message" : "All users successfully deleted"}
-
+    return "Tutti gli utenti sono stati eliminati correttamente"
 
 @router.delete("/{username}")
 def delete_user(username: str, session: SessionDep):
@@ -71,7 +70,7 @@ def delete_user(username: str, session: SessionDep):
 
     #se l'utente non esiste, si solleva l'eccezione
     if not user:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Utente non trovato")
 
     #si eliminiamo prima tutte le registrazioni associate a questo username
     registration_statement = delete(Registration).where(Registration.username == username)
@@ -81,4 +80,4 @@ def delete_user(username: str, session: SessionDep):
     session.delete(user)
     session.commit()
 
-    return {"message": f"User {username} deleted successfully"}
+    return f"Utente {username} eliminato correttamente"
