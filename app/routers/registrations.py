@@ -20,10 +20,10 @@ def delete_registration(username: str, event_id: int, session: SessionDep):
     si procede a cercare la registrazione in questione e se anche quest'ultima
     esiste, si procede a eliminarla"""
     if not session.get(User, username):
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Utente non trovato")
 
     if not session.get(Event, event_id):
-        raise HTTPException(status_code=404, detail="Event not found")
+        raise HTTPException(status_code=404, detail="Evento non trovato")
 
     statement = select(Registration).where(
         Registration.username == username,
@@ -32,10 +32,9 @@ def delete_registration(username: str, event_id: int, session: SessionDep):
     registration = session.exec(statement).first()
 
     if not registration:
-        raise HTTPException(status_code=404, detail="Registration not found")
+        raise HTTPException(status_code=404, detail="Registrazione non trovata")
 
     session.delete(registration)
     session.commit()
 
-    return {"message": "Registration deleted successfully"}
-
+    return "Registrazione eliminata correttamente"
