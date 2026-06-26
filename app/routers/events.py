@@ -131,3 +131,4 @@ def delete_event(
     session.commit()
     return "Event deleted successfully"
 
+'''fine'''
